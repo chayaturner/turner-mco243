@@ -1,9 +1,10 @@
 package turner.microprocessor;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+//import java.io.File;
+//import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class ProcessorMain {
 
@@ -13,7 +14,11 @@ public class ProcessorMain {
 		Processor processor;
 		String instruction;
 
-		BufferedReader reader = new BufferedReader(new FileReader(new File("mach.in")));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); // read
+																						// from
+																						// command
+																						// prompt
+		// (new FileReader(new File("mach.in"))); //read directly from the file
 		instruction = reader.readLine();
 		while (instruction != null) {
 			memory = new Memory(instruction);
