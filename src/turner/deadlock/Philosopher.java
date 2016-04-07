@@ -1,5 +1,7 @@
 package turner.deadlock;
 
+import java.util.concurrent.TimeUnit;
+
 public class Philosopher extends Thread {
 
 	private Fork f1;
@@ -12,34 +14,49 @@ public class Philosopher extends Thread {
 		this.f2 = f2;
 	}
 
+	@Override
 	public void run() {
 		while (true) {
 			think();
-			eat();
+			try {
+				eat();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-	
-	public void eat() {
+
+	public void eat() throws InterruptedException {
+		// if more than one fork available, pick up
+		// pick up fork if have one and need one more to eat.
+		// if no fork, wait.
+
 		System.out.println(this + " trying to pick up " + f1);
-		synchronized(f1) {
-			waitForAFewSeconds(10);
-			System.out.println(this + " trying to pick up " + f2);
-			synchronized(f2) {
-				System.out.println(this + " eating...");
-				waitForAFewSeconds(10);
-			}
+
+		f1.tryLock(10, TimeUnit.SECONDS);
+		System.out.println(this + " trying to pick up " + f2);
+		f2.tryLock(10, TimeUnit.SECONDS);
+
+		System.out.println(this + " eating");
+
+		if (f1.isLocked()) {
+			f2.unlock();
 			System.out.println(this + " put down " + f1);
 		}
-		System.out.println(this + " put down " + f2);
+		if (f2.isLocked()) {
+			f1.unlock();
+			System.out.println(this + " put down " + f2);
+		}
 	}
-	
+
 	public void think() {
 		waitForAFewSeconds(5);
 	}
 
 	private void waitForAFewSeconds(int seconds) {
 		try {
-			Thread.sleep((long) (seconds * 1000));
+			Thread.sleep(seconds * 1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -49,6 +66,5 @@ public class Philosopher extends Thread {
 	public String toString() {
 		return "Philosopher [name=" + name + "]";
 	}
-	
-	
+
 }
