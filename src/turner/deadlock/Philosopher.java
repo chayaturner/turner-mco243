@@ -1,15 +1,18 @@
 package turner.deadlock;
 
-import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class Philosopher extends Thread {
 
+	private static final Logger LOG = Logger.getLogger(Philosopher.class.getName());
 	private Fork f1;
 	private Fork f2;
 	private String name;
+	private Waiter waiter;
 
-	public Philosopher(String name, Fork f1, Fork f2) {
+	public Philosopher(String name, Waiter waiter, Fork f1, Fork f2) {
 		this.name = name;
+		this.waiter = waiter;
 		this.f1 = f1;
 		this.f2 = f2;
 	}
@@ -18,36 +21,22 @@ public class Philosopher extends Thread {
 	public void run() {
 		while (true) {
 			think();
-			try {
-				eat();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			eat();
 		}
 	}
 
-	public void eat() throws InterruptedException {
-		// if more than one fork available, pick up
-		// pick up fork if have one and need one more to eat.
-		// if no fork, wait.
+	public void eat() {
 
-		System.out.println(this + " trying to pick up " + f1);
-
-		f1.tryLock(10, TimeUnit.SECONDS);
-		System.out.println(this + " trying to pick up " + f2);
-		f2.tryLock(10, TimeUnit.SECONDS);
-
-		System.out.println(this + " eating");
-
-		if (f1.isLocked()) {
-			f2.unlock();
-			System.out.println(this + " put down " + f1);
+		LOG.info(this.toString() + " attempting to eat");
+		if (waiter.tryEat(f1, f2)) {
+			LOG.info(this.toString() + " eating");
+			waitForAFewSeconds(10);
+			f1.setInUse(false);
+			f2.setInUse(false);
 		}
-		if (f2.isLocked()) {
-			f1.unlock();
-			System.out.println(this + " put down " + f2);
-		}
+
+		LOG.info(this.toString() + " done eating");
+
 	}
 
 	public void think() {
