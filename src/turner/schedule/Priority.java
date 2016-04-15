@@ -1,5 +1,5 @@
 package turner.schedule;
 
 public enum Priority {
-	High, Medium, Low
+	Low, Medium, High, RealTime
 }
