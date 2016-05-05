@@ -1,24 +1,26 @@
 package turner.schedule;
 
 public class Job {
-	
+
 	private String name;
 
 	private Priority priority;
 	private Priority dynamicPriority;
-	
+
 	private JobState state;
 	private JobType type;
-	private int timeLeftToRun;
+	private Integer timeLeftToRun;
 	private long lastRanAtTime;
-	
-	public Job(String name, Priority priority, JobType type, int timeLeftToRun){
+	private Long deadline;
+
+	public Job(String name, Priority priority, JobType type, int timeLeftToRun, Long deadline) {
 		this.name = name;
 		this.priority = priority;
 		this.type = type;
 		this.timeLeftToRun = timeLeftToRun;
+		this.deadline = deadline;
 	}
-	
+
 	public JobType getType() {
 		return type;
 	}
@@ -43,12 +45,16 @@ public class Job {
 		this.state = state;
 	}
 
-	public void setTimeLeftToRun(int timeLeftToRun) {
+	public void setTimeLeftToRun(Integer timeLeftToRun) {
 		this.timeLeftToRun = timeLeftToRun;
 	}
 
 	public void setLastRanAtTime(long lastRanAtTime) {
 		this.lastRanAtTime = lastRanAtTime;
+	}
+
+	public void setDeadline(Long deadline) {
+		this.deadline = deadline;
 	}
 
 	public String getName() {
@@ -67,7 +73,7 @@ public class Job {
 		return state;
 	}
 
-	public int getTimeLeftToRun() {
+	public Integer getTimeLeftToRun() {
 		return timeLeftToRun;
 	}
 
@@ -75,11 +81,16 @@ public class Job {
 		return lastRanAtTime;
 	}
 
-	public void decrementTimeLeftToRun(int time){
+	public Long getDeadline() {
+		return deadline;
+	}
+
+	public void decrementTimeLeftToRun(int time) {
 		timeLeftToRun -= time;
 	}
-	
-	public boolean isFinished(){
+
+	public boolean isFinished() {
 		return timeLeftToRun <= 0;
 	}
+
 }
