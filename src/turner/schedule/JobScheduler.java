@@ -92,17 +92,14 @@ public class JobScheduler implements Runnable {
 
 	public static void main(String[] args) {
 
-		List<Job> jobs = Arrays.asList(new Job("1", Priority.High, JobType.Computation, 100, 1L),
-				new Job("2", Priority.Low, JobType.IO, 200, 2L),
-				new Job("3", Priority.Medium, JobType.Computation, 100, 3L),
-				new Job("4", Priority.High, JobType.Computation, 1000, 2L),
-				new Job("5", Priority.Medium, JobType.Computation, 350, 1L),
-				new Job("6", Priority.Medium, JobType.IO, 100, 3L), new Job("7", Priority.Low, JobType.IO, 500, 2L),
-				new Job("8", Priority.High, JobType.Computation, 20, 3L),
-				new Job("9", Priority.Medium, JobType.IO, 30, 1L),
-				new Job("10", Priority.Medium, JobType.Computation, 600, 2L),
-				new Job("11", Priority.Low, JobType.IO, 100, 3L),
-				new Job("12", Priority.Low, JobType.Computation, 700, 3L)
+		List<Job> jobs = Arrays.asList(new Job("1", Priority.High, JobType.Computation, 100, 1L), new Job("2",
+				Priority.Low, JobType.IO, 200, 2L), new Job("3", Priority.Medium, JobType.Computation, 100, 3L),
+				new Job("4", Priority.High, JobType.Computation, 1000, 2L), new Job("5", Priority.Medium,
+						JobType.Computation, 350, 1L), new Job("6", Priority.Medium, JobType.IO, 100, 3L), new Job("7",
+						Priority.Low, JobType.IO, 500, 2L), new Job("8", Priority.High, JobType.Computation, 20, 3L),
+				new Job("9", Priority.Medium, JobType.IO, 30, 1L), new Job("10", Priority.Medium, JobType.Computation,
+						600, 2L), new Job("11", Priority.Low, JobType.IO, 100, 3L), new Job("12", Priority.Low,
+						JobType.Computation, 700, 3L)
 
 		);
 

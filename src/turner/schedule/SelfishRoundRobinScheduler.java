@@ -1,17 +1,15 @@
 package turner.schedule;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 
-public class SelfishRoundRobinScheduler extends JobScheduler {
+public class SelfishRoundRobinScheduler extends RoundRobinJobScheduler {
 
 	private ArrayList<Job> active = new ArrayList<Job>();
 	private ArrayList<Job> holding = new ArrayList<Job>();
 
-	public SelfishRoundRobinScheduler(List<Job> jobs, Comparator<Job> comparator) {
-		super(jobs, comparator);
+	public SelfishRoundRobinScheduler(ArrayList<Job> jobs) {
+		super(jobs);
 		divideIntoQueues();
 	}
 
