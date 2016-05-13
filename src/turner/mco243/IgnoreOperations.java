@@ -2,6 +2,7 @@ package turner.mco243;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -33,12 +34,13 @@ public class IgnoreOperations {
 								allowed.set(true);
 							}
 						}
-					}
+					};
+					
+					service.execute(runnable); 
 				}
-			};
-	
-			service.execute(runnable); 
-		}
+			}
+			
+		};
 
 		service.shutdown(); 
 		service.awaitTermination(10, TimeUnit.SECONDS); 
@@ -46,5 +48,4 @@ public class IgnoreOperations {
 
 	}
 }
-		}
-	}
+
