@@ -29,10 +29,9 @@ public class DownloadLotsOfImages {
 			service.execute(runnable); // service has a queue of runnables. When it
 										// finishes, gives it another runnable
 										// to use. (in each loop)
-
 		}
 
-		service.shutdown(); //tells service to complete everything in
+		service.shutdown(); //tells service to stop and complete everything in
 							// queue and then shut down all threads/runnables
 
 		// shuts down service when all runnables finish executing.
